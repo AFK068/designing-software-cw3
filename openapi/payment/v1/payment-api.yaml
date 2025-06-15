@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: Payment API
+  version: 1.0.0
+paths:
+  /account:
+    post:
+      summary: Create a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  format: uuid
+      responses:
+        '201':
+          description: Account created successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '409':
+          description: Account already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+
+  /account/{user_id}/deposit:
+    post:
+      summary: Deposit money to account
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  format: int64
+      responses:
+        '200':
+          description: Deposit successful
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+
+  /account/{user_id}/balance:
+    get:
+      summary: Get account balance
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Account balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalanceResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+
+components:
+  schemas:
+    ApiErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    AccountBalanceResponse:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        balance:
+          type: string
