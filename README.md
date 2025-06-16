@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 
-This is a simple backend project that allows users to collect statistics from files, save them, and detect plagiarism.
+This is a backend project for order and payment microservices, featuring asynchronous communication, reliable event delivery, and basic account management.
 
 ## How to Run
 
