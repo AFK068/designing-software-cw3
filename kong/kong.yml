@@ -1,0 +1,15 @@
+_format_version: "3.0"
+services:
+  - name: order
+    url: http://order:8082
+    routes:
+      - name: order-route
+        paths: ["/order"]
+        strip_path: false
+
+  - name: payment
+    url: http://payment:8083
+    routes:
+      - name: payment-route
+        paths: ["/payment"]
+        strip_path: false
