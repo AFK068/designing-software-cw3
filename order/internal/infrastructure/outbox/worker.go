@@ -100,14 +100,14 @@ func (w *Worker) ProcessOutbox() {
 	w.logger.Info("outbox processing completed", zap.Int("processedRecords", len(outboxRecords)))
 }
 
-func (s *Worker) Stop() error {
-	err := s.scheduler.Shutdown()
+func (w *Worker) Stop() error {
+	err := w.scheduler.Shutdown()
 	if err != nil {
-		s.logger.Error("failed to stop scheduler")
+		w.logger.Error("failed to stop scheduler")
 		return fmt.Errorf("failed to stop scheduler: %w", err)
 	}
 
-	s.logger.Info("Scheduler stopped")
+	w.logger.Info("Scheduler stopped")
 
 	return nil
 }
